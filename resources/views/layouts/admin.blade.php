@@ -104,87 +104,13 @@
                         <i class="fa fa-angle-right pull-right"></i>
                         </span>
                     </a>
-                    <ul class="treeview-menu" style="height:300px;overflow-y:scroll;">
-                        @can('Read Sub Satuan Kerja')
-                            <li class="@if(isset($varGlobal['sub-satuan-kerja'])) {{ $varGlobal['sub-satuan-kerja'] }} @endif"><a href="{{ url('master-data/sub-satuan-kerja') }}"><i class="fa fa-circle-thin"></i>Sub Satuan Kerja</a></li>
-                        @endcan
-                        @can('Read Spesies')
-                            <li class="@if(isset($varGlobal['spesies'])) {{ $varGlobal['spesies'] }} @endif"><a href="{{ url('master-data/spesies') }}"><i class="fa fa-circle-thin"></i>Spesies</a></li>
-                        @endcan
-                        @can('Read Ras')
-                            <li class="@if(isset($varGlobal['ras'])) {{ $varGlobal['ras'] }} @endif"><a href="{{ url('master-data/ras') }}"><i class="fa fa-circle-thin"></i>Ras</a></li>
-                        @endcan
-                        @can('Read Jenis Contoh')
-                            <li class="@if(isset($varGlobal['jenis-contoh'])) {{ $varGlobal['jenis-contoh'] }} @endif"><a href="{{ url('master-data/jenis-contoh') }}"><i class="fa fa-circle-thin"></i>Jenis Contoh</a></li>
-                        @endcan
-                        @can('Read Bentuk Contoh')
-                            <li class="@if(isset($varGlobal['bentuk-contoh'])) {{ $varGlobal['bentuk-contoh'] }} @endif"><a href="{{ url('master-data/bentuk-contoh') }}"><i class="fa fa-circle-thin"></i>Bentuk Contoh</a></li>
-                        @endcan
-                        @can('Read Seksi Laboratorium')
-                            <li class="@if(isset($varGlobal['seksi-laboratorium'])) {{ $varGlobal['seksi-laboratorium'] }} @endif"><a href="{{ url('master-data/seksi-laboratorium') }}"><i class="fa fa-circle-thin"></i>Seksi Laboratorium</a></li>
-                        @endcan
-                        @can('Read Jenis Pengujian')
-                            <li class="@if(isset($varGlobal['jenis-pengujian'])) {{ $varGlobal['jenis-pengujian'] }} @endif"><a href="{{ url('master-data/jenis-pengujian') }}"><i class="fa fa-circle-thin"></i>Jenis Pengujian</a></li>
-                        @endcan
-                        @can('Read Customer')
-                            <li class="@if(isset($varGlobal['customer'])) {{ $varGlobal['customer'] }} @endif"><a href="{{ url('master-data/customer') }}"><i class="fa fa-circle-thin"></i>Customer</a></li>
-                        @endcan
-                        @can('Read Asal Hewan')
-                            <li class="@if(isset($varGlobal['asal-hewan'])) {{ $varGlobal['asal-hewan'] }} @endif"><a href="{{ url('master-data/asal-hewan') }}"><i class="fa fa-circle-thin"></i>Asal Hewan</a></li>
-                        @endcan
-                        @can('Read Pemeriksa')
-                            <li class="@if(isset($varGlobal['pemeriksa'])) {{ $varGlobal['pemeriksa'] }} @endif"><a href="{{ url('master-data/pemeriksa') }}"><i class="fa fa-circle-thin"></i>Pemeriksa</a></li>
-                        @endcan
-                        @can('Read Pemilik')
-                            <li class="@if(isset($varGlobal['pemilik'])) {{ $varGlobal['pemilik'] }} @endif"><a href="{{ url('master-data/pemilik') }}"><i class="fa fa-circle-thin"></i>Pemilik</a></li>
-                        @endcan
-                        @can('Read Penyakit')
-                            <li class="@if(isset($varGlobal['penyakit'])) {{ $varGlobal['penyakit'] }} @endif"><a href="{{ url('master-data/penyakit') }}"><i class="fa fa-circle-thin"></i>Penyakit</a></li>
-                        @endcan
-                        @can('Read Obat')
-                            <li class="@if(isset($varGlobal['obat'])) {{ $varGlobal['obat'] }} @endif"><a href="{{ url('master-data/obat') }}"><i class="fa fa-circle-thin"></i>Obat</a></li>
-                        @endcan
-                        @can('Read Operasi')
-                            <li class="@if(isset($varGlobal['operasi'])) {{ $varGlobal['operasi'] }} @endif"><a href="{{ url('master-data/operasi') }}"><i class="fa fa-circle-thin"></i>Operasi</a></li>
-                        @endcan
-                        @can('Read Kan')
-                            <li class="@if(isset($varGlobal['obat'])) {{ $varGlobal['obat'] }} @endif"><a href="{{ url('master-data/logo') }}"><i class="fa fa-circle-thin"></i>Logo</a></li>
-                        @endcan
-
-                        <li class="@if(isset($varGlobal['pegawai'])) {{ $varGlobal['pegawai'] }} @endif"><a href="{{ url('master-data/pegawai') }}"><i class="fa fa-circle-thin"></i>Pegawai</a></li>
+                    <ul class="treeview-menu">
+                        <li class="@if(isset($varGlobal['pemilik'])) {{ $varGlobal['pemilik'] }} @endif"><a href="{{ url('master-data/pemilik') }}"><i class="fa fa-circle-thin"></i>Pasien</a></li>
+                        <li class="@if(isset($varGlobal['obat'])) {{ $varGlobal['obat'] }} @endif"><a href="{{ url('master-data/obat') }}"><i class="fa fa-circle-thin"></i>Obat</a></li>
+                        <li class="@if(isset($varGlobal['layanan'])) {{ $varGlobal['layanan'] }} @endif"><a href="{{ url('master-data/layanan') }}"><i class="fa fa-circle-thin"></i>Layanan</a></li>
+                        <li class="@if(isset($varGlobal['pemeriksa'])) {{ $varGlobal['pemeriksa'] }} @endif"><a href="{{ url('master-data/pemeriksa') }}"><i class="fa fa-circle-thin"></i>Pemeriksa</a></li>
                     </ul>
                 </li>
-                @can('Read Laboratorium')
-                    <li class="treeview @if(isset($varGlobal['lab'])) {{ $varGlobal['lab'] }} @endif">
-                        <a href="#">
-                            <i class="fa fa-hospital-o"></i>
-                            <span>Laboratorium</span>
-                            <span class="pull-right-container">
-                            <i class="fa fa-angle-right pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            @can('Read Lab Keswan')
-                                @if(Auth::user()->view_data < 3 || \Session::get('user_jenis') == 1)
-                                <li class="@if(isset($varGlobal['keswan'])) {{ $varGlobal['keswan'] }} @endif"><a href="{{ url('lab/keswan') }}"><i class="fa fa-circle-thin"></i>Keswan</a></li>
-                                @endif
-                            @endcan
-                            @can('Read Lab Pakan')
-                                @if(Auth::user()->view_data < 3 || \Session::get('user_jenis') == 2)
-                                <li class="@if(isset($varGlobal['pakan'])) {{ $varGlobal['pakan'] }} @endif"><a href="{{ url('lab/pakan') }}"><i class="fa fa-circle-thin"></i>Pakan</a></li>
-                                @endif
-                            @endcan
-                            @can('Read Lab Kesmavet')
-                                @if(Auth::user()->view_data < 3 || \Session::get('user_jenis') == 3)
-                                <li class="@if(isset($varGlobal['kesmavet'])) {{ $varGlobal['kesmavet'] }} @endif"><a href="{{ url('lab/kesmavet') }}"><i class="fa fa-circle-thin"></i>Kesmavet</a></li>
-                                @endif
-                            @endcan
-                        </ul>
-                    </li>
-                @endcan
-                @can('Read PLLT')
-                    <li class="@if(isset($varGlobal['pllt'])) {{ $varGlobal['pllt'] }} @endif"><a href="{{ url('pllt') }}"><i class="fa fa-heart"></i> <span>PLLT</span></a></li>
-                @endcan
                 @can('Read Klinik')
                     <li class="@if(isset($varGlobal['klinik'])) {{ $varGlobal['klinik'] }} @endif"><a href="{{ url('klinik/rekap') }}"><i class="fa fa-medkit"></i> <span>Klinik</span></a></li>
                 @endcan
@@ -196,39 +122,12 @@
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        @can('Read Lab Keswan')
-                            @if(Auth::user()->view_data < 3 || \Session::get('user_jenis') == 1)
-                            <li class="@if(isset($varGlobal['Lab. Keswan'])) {{ $varGlobal['lap-pengujian'] }} @endif"><a href="{{ url('laporan/lab-keswan') }}"><i class="fa fa-circle-thin"></i>Lab. Keswan</a></li>
-                            @endif
-                        @endcan
-                        @can('Read Lab Pakan')
-                            @if(Auth::user()->view_data < 3 || \Session::get('user_jenis') == 2)
-                            <li class="@if(isset($varGlobal['Lab. Pakan'])) {{ $varGlobal['lap-pengujian'] }} @endif"><a href="{{ url('laporan/lab-pakan') }}"><i class="fa fa-circle-thin"></i>Lab. Pakan</a></li>
-                            @endif
-                        @endcan
-                        @can('Read Lab Kesmavet')
-                            @if(Auth::user()->view_data < 3 || \Session::get('user_jenis') == 3)
-                            <li class="@if(isset($varGlobal['Lab. Kesmavet'])) {{ $varGlobal['lap-pengujian'] }} @endif"><a href="{{ url('laporan/lab-kesmavet') }}"><i class="fa fa-circle-thin"></i>Lab. Kesmavet</a></li>
-                            @endif
-                        @endcan
-                        <!-- @can('Read Laporan Pengujian')
-                            <li class="@if(isset($varGlobal['lap-pengujian'])) {{ $varGlobal['lap-pengujian'] }} @endif"><a href="{{ url('laporan/lap-pengujian') }}"><i class="fa fa-circle-thin"></i>Lap. Pengujian</a></li>
-                        @endcan -->
-                        @can('Read Laporan Ternak Masuk')
-                            <li class="@if(isset($varGlobal['lap-ternak-masuk'])) {{ $varGlobal['lap-ternak-masuk'] }} @endif"><a href="{{ url('laporan/lap-ternak-masuk') }}"><i class="fa fa-circle-thin"></i>Lap. Ternak Masuk</a></li>
-                        @endcan
-                        @can('Read Laporan Ternak Lewat')
-                            <li class="@if(isset($varGlobal['lap-ternak-lewat'])) {{ $varGlobal['lap-ternak-lewat'] }} @endif"><a href="{{ url('laporan/lap-ternak-lewat') }}"><i class="fa fa-circle-thin"></i>Lap. Ternak Lewat</a></li>
-                        @endcan
-                        @can('Read Laporan Ternak Keluar')
-                            <li class="@if(isset($varGlobal['lap-ternak-keluar'])) {{ $varGlobal['lap-ternak-keluar'] }} @endif"><a href="{{ url('laporan/lap-ternak-keluar') }}"><i class="fa fa-circle-thin"></i>Lap. Ternak Keluar</a></li>
-                        @endcan
                         @can('Read Laporan Klinik')
                             <li class="@if(isset($varGlobal['lap-klinik'])) {{ $varGlobal['lap-klinik'] }} @endif"><a href="{{ url('laporan/lap-klinik') }}"><i class="fa fa-circle-thin"></i>Lap. Klinik</a></li>
                         @endcan
                     </ul>
                 </li>
-				<li class="@if(isset($varGlobal['stock'])) {{ $varGlobal['stock'] }} @endif"><a href="{{ url('stock/index') }}"><i class="fa fa-medkit"></i> <span>Stock</span></a></li>
+				<!--<li class="@if(isset($varGlobal['stock'])) {{ $varGlobal['stock'] }} @endif"><a href="{{ url('stock/index') }}"><i class="fa fa-medkit"></i> <span>Stock</span></a></li>-->
                 <li class="treeview @if(isset($varGlobal['pengaturan'])) {{ $varGlobal['pengaturan'] }} @endif">
                     <a href="#">
                         <i class="fa fa-cog"></i> <span>Pengaturan</span>

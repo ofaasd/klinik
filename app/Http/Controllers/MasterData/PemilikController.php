@@ -57,22 +57,17 @@ class PemilikController extends Controller
         $var['method'] =  'create';
         $lok = Auth::user()->nip;
 
-        if($lok == 'NIP006' || $lok == 'SMG009' ){
-            $jml = Pemilik::where('kode','like','%SMG%')->orderBy("id","desc")->first();
-			$kode = explode("SMG",$jml->kode);
-			$kode_akhir = ((int)$kode[1]);
-			
-            $jml = $kode_akhir+1;
-            $var['kode'] = 'SMG'.$jml;
-        }elseif($lok == 'NIP005'){
-            $jml = Pemilik::where('kode','like','%BWN%')->count();
-            $jml = $jml+1;
-            $var['kode'] = 'BWN'.$jml;
+        $jml = Pemilik::where('kode','like','%SMG%')->orderBy("id","desc")->first();
+        if(empty($jml)){
+            $kode_akhir = 0;
         }else{
-            $var['kode'] = '';
+            $kode = explode("SMG",$jml->kode);
+            $kode_akhir = ((int)$kode[1]);
         }
-		$var['spesies'] = Spesies::where("klinik",1)->pluck('nama_spesies','id')->all();
-		
+        $jml = $kode_akhir+1;
+        $var['kode'] = 'SMG'.$jml;
+
+
         return view('master-data.pemilik.pemilik-2', compact('var'));
     }
 
@@ -85,13 +80,13 @@ class PemilikController extends Controller
     public function store(Request $request)
     {
         //try {
-            
+
             $input = $request->all();
-            
+
 			$nama = $request->input('nama');
 			$telepon = $request->input('telepon');
 			//echo $nama;
-			
+
 			$query = DB::table('pemilik')->selectRaw('count(*) as jumlah')->whereRaw('TRIM(nama) = TRIM(?) and TRIM(telepon) = TRIM(?)',array($nama,$telepon))->first();
 			//echo "asdasdasd";
 			echo $query->jumlah;
@@ -122,12 +117,12 @@ class PemilikController extends Controller
 				}
 				return redirect('master-data/pemilik/' . $pemilik->id .'/edit');
 			}
-			
-			
+
+
 			//$pemilik = Pemilik::create($input);
-			
-            
-			
+
+
+
         /* } catch (\Exception $e) {
             DB::rollback();
             Session::flash('pesanError', 'Data Pemilik Gagal Disimpan'); */
@@ -136,7 +131,7 @@ class PemilikController extends Controller
 
         //return redirect('master-data/pemilik/create');
     }
-	
+
 	public function store_pasien(Request $request){
 		$cari_pasien = Klinik::where("no_pasien","like","%".$request->input("kode_pemilik") . "%")->orderBy("id","desc")->first();
 		if(!empty($cari_pasien)){
@@ -148,7 +143,7 @@ class PemilikController extends Controller
 			$format_baru = 01;
 		}
 		$jml = Pemilik::where('kode','like','%SMG%')->orderBy("id","desc")->first();
-		
+
 		$klinik = new Klinik();
 		$klinik->no_pasien = $request->input('kode_pemilik') . "/" . $format_baru;
 		$klinik->pemilik_id = $request->input('id_pemilik');
@@ -164,8 +159,8 @@ class PemilikController extends Controller
 		}
 		return redirect('master-data/pemilik/'. $request->input('id_pemilik') . "/edit");
 	}
-	
-	
+
+
     /**
      * Display the specified resource.
      *
@@ -197,11 +192,11 @@ class PemilikController extends Controller
 		$var['klinik'] = Klinik::select("klinik.*","spesies.nama_spesies")->where("pemilik_id",$id)->join("spesies","klinik.spesies_id","spesies.id")->get();
 		//echo $var['klinik']->count();
 		$var['spesies'] = Spesies::pluck('nama_spesies','id')->all();
-		
+
 		//exit;
         return view('master-data.pemilik.pemilik-3', compact('listPemilik', 'var'));
     }
-	
+
     /**
      * Update the specified resource in storage.
      *
@@ -228,7 +223,7 @@ class PemilikController extends Controller
 
         return redirect('master-data/pemilik'.$var['url']['all']);
     }
-	
+
 	public function update_pasien(Request $request){
 		$var['url'] = $this->url;
 		$klinik = Klinik::find($request->input("id"));
@@ -252,9 +247,9 @@ class PemilikController extends Controller
 
         try {
             DB::beginTransaction();
-			
+
 			$klinik = Klinik::where("pemilik_id",$id)->delete();
-			
+
             $pemilik = Pemilik::find($id);
             $pemilik->delete();
 

@@ -39,9 +39,9 @@
                                         {!! Form::model($listPemeriksa, ['class'=>'form-pemeriksa']) !!}
                                     @endif
                                         <div class="form-group row">
-                                            {!! Form::label('nip', 'NIP.', ['class' => 'col-sm-2 col-form-label']) !!}
+                                            {!! Form::label('nip', 'No. Pegawai', ['class' => 'col-sm-2 col-form-label']) !!}
                                             <div class="col-sm-10">
-                                                {!! Form::text('nip', null, ['class'=>'form-control', 'placeholder'=>'Inputkan NIP.']) !!}
+                                                {!! Form::text('nip', null, ['class'=>'form-control', 'placeholder'=>'Inputkan No. Pegawai']) !!}
                                             </div>
                                         </div>
                                         <div class="form-group row">

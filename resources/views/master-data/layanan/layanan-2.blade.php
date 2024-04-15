@@ -5,12 +5,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Obat
+            Layanan
         </h1>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#"><i class="fa fa-dashboard"></i> Beranda</a></li>
             <li class="breadcrumb-item"><a href="#">Master Data</a></li>
-            <li class="breadcrumb-item active">Obat</li>
+            <li class="breadcrumb-item active">Layanan</li>
         </ol>
     </section>
 
@@ -24,42 +24,30 @@
                     <div class="box-body">
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs">
-                            <li class="nav-item"><a href="{{ url('master-data/obat') }}" class="nav-link"><span class="hidden-sm-up"><b>Lihat Data</b></span> <span class="hidden-xs-down"><b>Lihat Data</b></span></a></li>
-                            <li class="nav-item"><a href="{{ url('master-data/obat/create') }}" class="nav-link active"><span class="hidden-sm-up"><b>Tambah Data</b></span> <span class="hidden-xs-down"><B>Tambah Data</b></span></a></li>
+                            <li class="nav-item"><a href="{{ url('master-data/layanan') }}" class="nav-link"><span class="hidden-sm-up"><b>Lihat Data</b></span> <span class="hidden-xs-down"><b>Lihat Data</b></span></a></li>
+                            <li class="nav-item"><a href="{{ url('master-data/layanan/create') }}" class="nav-link active"><span class="hidden-sm-up"><b>Tambah Data</b></span> <span class="hidden-xs-down"><B>Tambah Data</b></span></a></li>
                         </ul>
                         <!-- Tab panes -->
                         <div class="tab-content tabcontent-border">
                             <div class="tab-pane active">
                                 <div class="pad">
                                     @if($var['method']=='edit')
-                                        {!! Form::model($listObat, ['method'=>'PATCH', 'url'=> '/master-data/obat/'.$listObat->id.$var['url']['all'], 'id'=>'form-obat']) !!}
+                                        {!! Form::model($listLayanan, ['method'=>'PATCH', 'url'=> '/master-data/layanan/'.$listLayanan->id.$var['url']['all'], 'id'=>'form-Layanan']) !!}
                                     @elseif($var['method']=='create')
-                                        {!! Form::open(['id'=>'form-obat', 'method'=>'POST', 'url'=>'/master-data/obat']) !!}
+                                        {!! Form::open(['id'=>'form-Layanan', 'method'=>'POST', 'url'=>'/master-data/layanan']) !!}
                                     @else
-                                        {!! Form::model($listObat, ['class'=>'form-obat']) !!}
+                                        {!! Form::model($listLayanan, ['class'=>'form-Layanan']) !!}
                                     @endif
                                         <div class="form-group row">
-                                            {!! Form::label('kode', 'Kode', ['class' => 'col-sm-2 col-form-label']) !!}
+                                            {!! Form::label('nama', 'Nama Layanan', ['class' => 'col-sm-2 col-form-label']) !!}
                                             <div class="col-sm-10">
-                                                {!! Form::text('kode', null, ['class'=>'form-control', 'placeholder'=>'Inputkan Kode']) !!}
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            {!! Form::label('obat', 'Nama Obat', ['class' => 'col-sm-2 col-form-label']) !!}
-                                            <div class="col-sm-10">
-                                                {!! Form::text('obat', null, ['class'=>'form-control', 'placeholder'=>'Inputkan Obat']) !!}
+                                                {!! Form::text('nama', null, ['class'=>'form-control', 'placeholder'=>'Inputkan Nama Layanan']) !!}
                                             </div>
                                         </div>
 										<div class="form-group row">
-                                            {!! Form::label('Satuan', 'Satuan', ['class' => 'col-sm-2 col-form-label']) !!}
+                                            {!! Form::label('tarif', 'Tarif', ['class' => 'col-sm-2 col-form-label']) !!}
                                             <div class="col-sm-10">
-                                                {!! Form::text('satuan', null, ['class'=>'form-control', 'placeholder'=>'cth : pcs']) !!}
-                                            </div>
-                                        </div>
-										<div class="form-group row">
-                                            {!! Form::label('harga_jual', 'Harga Jual', ['class' => 'col-sm-2 col-form-label']) !!}
-                                            <div class="col-sm-10">
-                                                {!! Form::number('harga_jual', null, ['class'=>'form-control', 'placeholder'=>'cth : 10000']) !!}
+                                                {!! Form::number('tarif', null, ['class'=>'form-control', 'placeholder'=>'cth : 10000']) !!}
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -96,33 +84,17 @@
     <script>
         $(document).ready(function() {
             @if($var['method']=='edit' || $var['method']=='show')
-                var pk = "{{ $listObat->id }}";
+                var pk = "{{ $listLayanan->id }}";
             @else
                 var pk = null;
             @endif
 
-            $("#form-obat").validate({
-                rules: {
-                    kode: {
-                        required: true,
-                        remote: {
-                            url: "{{ url('master-data/obat/cek-validasi') }}",
-                            type: "post",
-                            data: {
-                                "kolom" : "kode",
-                                "aksi" : "{{ $var['method'] }}",
-                                "pk" : pk
-                            }
-                        }
-                    },
-                    obat: "required",
-                },
+            $("#form-Layanan").validate({
+
                 messages: {
-                    kode: {
-                        required: "Kolom kode harus diisi",
-                        remote: "Kode sudah digunakan"
+                    nama: {
+                        required: "Kolom Nama Layanan harus diisi",
                     },
-                    obat: "Kolom obat harus diisi",
                 }
             });
         });

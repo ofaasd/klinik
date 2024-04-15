@@ -28,7 +28,10 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "kylekatarnls/update-helper": true
+        }
     },
     "extra": {
         "laravel": {
@@ -45,7 +48,8 @@
         ],
         "files": [
             "app/Helpers/Url.php",
-            "app/Helpers/Angka.php"
+            "app/Helpers/Angka.php",
+            "app/Http/Controllers/Helpers/ListUser.php"
         ]
     },
     "autoload-dev": {

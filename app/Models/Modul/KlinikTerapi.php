@@ -8,7 +8,7 @@ class KlinikTerapi extends Model
 {
     protected $table = 'klinik_terapi';
     protected $fillable = [
-            'klinik_id','pemeriksa','tindakan','tanggal_periksa','signalement','anamnesia','diagnosa','keterangan'
+            'klinik_id','pemeriksa','tindakan','tanggal_periksa','signalement','anamnesia','diagnosa','keterangan','nama_suami','tensi','bb','tanggal_lahir'
     ];
 
     public function setTanggalPeriksaAttribute($tanggal) {

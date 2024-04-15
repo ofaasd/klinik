@@ -5,12 +5,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Pemilik
+            Pasien
         </h1>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#"><i class="fa fa-dashboard"></i> Beranda</a></li>
             <li class="breadcrumb-item"><a href="#">Master Data</a></li>
-            <li class="breadcrumb-item active">Pemilik</li>
+            <li class="breadcrumb-item active">Pasien</li>
         </ol>
     </section>
 
@@ -76,9 +76,9 @@
                                                             {!! Form::open(['method'=>'delete', 'url'=>'/master-data/pemilik/'.$item->id.$var['url']['all'], 'class'=> 'delete_form']) !!}
                                                             {!! Form::hidden('nomor', $no, ['class'=>'form-control']) !!}
                                                             <div class="btn-group btn-group-xs" role="group" aria-label="Basic example">
-                                                               
+
 																<button type="submit" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></button>
-                                                               
+
                                                                 @can('Update Pemilik')
                                                                     <a href="{{ url('/master-data/pemilik/'.$item->id.'/edit'.$var['url']['all'])}}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></a>
                                                                 @endcan

@@ -12,7 +12,7 @@
             <li class="breadcrumb-item active">Klinik</li>
         </ol>
     </section>
-	
+
     <!-- Main content -->
     <section class="content">
 
@@ -34,7 +34,7 @@
 										@endif
 										</div>
 										<div class="col-md-12" style="text-alignL:right">
-											
+
 												<form method="post" action="{{url('klinik/rekap')}}">
 													@csrf
 													<div class="row">
@@ -54,14 +54,14 @@
 														</div>
 														<div class="col-md-4">
 															<input type="submit" class="btn btn-primary" value="Lihat Data">
-														</div>	
+														</div>
 													<div>
 												</form>
-												
+
 											</div>
 										</div>
 									</div>
-                                    <br> 
+                                    <br>
                                     <br />
                                     <div class="table-responsive">
                                         <table class="table table-hover" id="myTable">
@@ -71,14 +71,12 @@
                                                     <th style="text-align:center;">No. Pasien</th>
                                                     <th style="text-align:center;">Tanggal Periksa</th>
                                                     <!--<th style="text-align:center;">Klinik</th>-->
-                                                    <th style="text-align:center;">Pemilik</th>
-                                                    <th style="text-align:center;">Nama Hewan</th>
-                                                    <th style="text-align:center;">Jenis Hewan</th>
-                                                    <th style="text-align:center;">Waktu Pendaftaran</th>
-                                                    <th style="text-align:center;">Waktu Pemeriksaan</th>
-                                                    <th style="text-align:center;">Waktu Pembayaran</th>
+                                                    <th style="text-align:center;">Pasien</th>
+                                                    <th style="text-align:center;">Nama Suami</th>
+                                                    <th style="text-align:center;">Tensi</th>
+                                                    <th style="text-align:center;">BB</th>
                                                     <th style="text-align:center;">Status</th>
-													
+
 													@if($url == "rekap" or $url == "pembayaran")
 														<th style="text-align:center;">Total</th>
 													@endif
@@ -95,6 +93,7 @@
                                                 <tr>
                                                     <td style="text-align:center">
 													@if($url == "pemeriksaan")
+
 														@if($item->status == 1)
 															<a href="{{ url('/klinik/add_pemeriksaan/'.$item->id.'/awal')}}" class="btn btn-danger btn-xs">Blm Periksa</a>
 														@else
@@ -104,7 +103,7 @@
 													@if($url == "pendaftaran")
 														{!! Form::open(['method'=>'post', 'url'=>'/klinik/hapus_pendaftaran', 'class'=> 'delete_form']) !!}
 														{!! Form::hidden('id', $item->id, ['class'=>'form-control']) !!}
-														
+
 														<div class="btn-group btn-group-xs" role="group" aria-label="Basic example">
 															<button type="submit" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></button>
 															<a href="{{ url('/klinik/edit_pendaftaran/'.$item->id.'/awal')}}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></a>
@@ -120,29 +119,32 @@
                                                                     <button type="submit" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></button>
                                                                 @endcan
                                                                 <a href="{{ url('/klinik/detailPeriksa/'.$item->klinik_id.$var['url']['all'])}}" class="btn btn-info btn-xs"><i class="fa fa-search"></i></a>
-                                                                <a href="{{ url('/klinik/cetakRM/'.$item->klinik_id)}}" class="btn btn-success btn-xs"><i class="fa fa-print"></i></a>
+                                                                <a href="{{ url('/klinik/cetak/'.$item->klinik_id)}}" class="btn btn-success btn-xs"><i class="fa fa-print"></i></a>
                                                             </div>
                                                             {!! Form::close() !!}
                                                         </div>
 													@endif
 													@if($url == "pembayaran")
 														@if($item->status == 2)
-															<a href="{{ url('/klinik/add_pembayaran/'.$item->id)}}" class="btn btn-danger btn-xs">Blm Bayar</a>
+															<a href="{{ url('/klinik/add_pembayaran/'.$item->id.'/awal')}}" class="btn btn-danger btn-xs">Blm Bayar</a>
 														@else
-															<a href="{{ url('/klinik/add_pembayaran/'.$item->id)}}" class="btn btn-success btn-xs">Sudah Bayar</a>
+															<div class="btn-group">
+																<div class="btn-group btn-group-xs" role="group" aria-label="Basic example">
+																<a href="{{ url('/klinik/add_pembayaran/'.$item->id.'/awal')}}" class="btn btn-success btn-xs">Sudah Bayar</a>
+																<!--<a href="{{ url('/klinik/edit_pembayaran/'.$item->id)}}" class="btn btn-success btn-xs">Edit</a>-->
+																<a href="{{ url('/klinik/cetak/'.$item->id)}}" class="btn btn-primary btn-xs">Cetak</a>
+																</div>
+															</div>
 														@endif
 													@endif
                                                     </td>
                                                     <td>{{ $item->no_pasien }}</td>
-                                                    <td>{{ date('d-m-Y',strtotime($item->tanggal_periksa)) }}</td>
+                                                    <td>{{ date('d F Y',strtotime($item->tanggal_periksa)) }}</td>
                                                     <!--<td>{{ @$item->klinik->subSatuanKerja->sub_satuan_kerja }}</td>-->
                                                     <td>{{ @$item->klinik->pemilik->nama }}</td>
-                                                    <td>{{ $item->nama_hewan }}</td>
-                                                    
-                                                    <td>{{ @$item->klinik->spesies->nama_spesies }}</td>
-													<td>{{ $item->jam_pendaftaran }}</td>
-                                                    <td>{{ $item->jam_pemeriksaan }}</td>
-                                                    <td>{{ $item->jam_pembayaran }}</td>
+                                                    <td>{{ $item->nama_suami }}</td>
+                                                    <td>{{ $item->tensi }}</td>
+                                                    <td>{{ $item->bb }}</td>
                                                     <td>{{ $status[$item->status] }}</td>
 													@if($url == "rekap" or $url == "pembayaran")
 														<th style="text-align:center;">{{($item->status == 3)?"Rp. ". number_format($var['helper']->getTotal($item->id),0,"","."):0}}</th>

@@ -5,12 +5,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Pemilik
+            Pasien
         </h1>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#"><i class="fa fa-dashboard"></i> Beranda</a></li>
             <li class="breadcrumb-item"><a href="#">Master Data</a></li>
-            <li class="breadcrumb-item active">Pemilik</li>
+            <li class="breadcrumb-item active">Pasien</li>
         </ol>
     </section>
 
@@ -44,8 +44,8 @@
                                             @if($var['method']=='edit')
                                                 {!! Form::text('kode', null, ['class'=>'form-control', 'placeholder'=>'Inputkan Kode']) !!}
 											@else
-                                                {!! Form::text('kode', null, ['class'=>'form-control', 'placeholder'=>'Inputkan Kode']) !!}                           
-                                            @endif    
+                                                {!! Form::text('kode', null, ['class'=>'form-control', 'placeholder'=>'Inputkan Kode']) !!}
+                                            @endif
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -86,79 +86,6 @@
                                             </div>
                                         </div>
                                     {!! Form::close() !!}
-									<h3>Data Pasien</h3>
-									<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#tambah">Tambah Pasien</a>
-									<table class="table table-stripped">
-										<thead>
-											<tr>
-												<th>Nama</th>
-												<th>Jenis Hewan</th>
-												<th>Jenis Kelamin</th>
-												<th>Action</th>
-											</tr>
-										</thead>
-										<tbody>
-											@foreach($var['klinik'] as $row)
-											<tr>
-												<td>{{$row->nama_hewan}}</td>
-												<td>{{$row->nama_spesies}}</td>
-												<td>{{$row->jenis_kelamin}}</td>
-												<td>
-												<form method="post" action="{{ url('/master-data/pemilik/delete_pasien') }}" onsubmit="if(!confirm('Apakah anda yakin ? ')){return false;}" class="form">
-													@csrf
-													<input type="hidden" name="id" value="{{$row->id}}">
-													<input type="hidden" name="id_pemilik" value="{{$listPemilik->id}}">
-													<a href="" class="btn btn-primary" data-toggle="modal" data-target="#edit{{$row->id}}">Edit</a> 
-													<a href="{{ url('/klinik/pendaftaran_pasien/' . $row->id) }}" class="btn btn-success">Daftarkan Pasien</a>
-													<input type="submit" class="btn btn-danger" value="Delete">
-												</form>
-												</td>
-											</tr>
-											<div class="modal fade" id="edit{{$row->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-												  <div class="modal-dialog" role="document">
-													<div class="modal-content">
-													  <div class="modal-header">
-														<h5 class="modal-title" id="exampleModalLabel">Edit Pasien</h5>
-														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-														  <span aria-hidden="true">&times;</span>
-														</button>
-													  </div>
-													  <div class="modal-body">
-														<form method="post" action="{{ url('/master-data/pemilik/update_pasien') }}">
-														@csrf
-															<input type="hidden" name="id" value="{{$row->id}}">
-															<input type="hidden" name="id_pemilik" value="{{$listPemilik->id}}">
-															<div class="form-group row">
-																{!! Form::label('nama_hewan', 'Nama Hewan', ['class' => 'col-sm-2 col-form-label']) !!}
-																<div class="col-sm-10">
-																	{!! Form::text('nama_hewan', $row->nama_hewan, ['class'=>'form-control', 'placeholder'=>'Nama Hewan']) !!}
-																</div>
-															</div>
-															<div class="form-group row">
-																{!! Form::label('spesies_id', 'Jenis Hewan', ['class' => 'col-sm-2 col-form-label']) !!}
-																<div class="col-sm-10">
-																	{!! Form::select('spesies_id', $var['spesies'], $row->spesies_id, ['class'=>'form-control', 'placeholder'=>'Pilih Jenis Hewan', 'style'=>'width: 100%;', 'onchange'=>'ras()']) !!}
-																</div>
-															</div>
-															<div class="form-group row">
-																{!! Form::label('jenis_kelamin', 'Jenis Kelamin', ['class' => 'col-sm-2 col-form-label']) !!}
-																<div class="col-sm-10">
-																	{!! Form::select('jenis_kelamin', ['Jantan'=>'Jantan', 'Betina'=>'Betina'], $row->jenis_kelamin, ['class'=>'form-control', 'placeholder'=>'Pilih Jenis Kelamin']) !!}
-																</div>
-															</div>
-														<br>
-													  </div>
-													  <div class="modal-footer">
-														<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-														<input type="submit" class="btn btn-primary" value="Simpan">
-														</form>
-													  </div>
-													</div>
-												  </div>
-												</div>
-											@endforeach
-										</tbody>
-									</table>
                                 </div>
                             </div>
                         </div>
@@ -172,51 +99,8 @@
 
     </section>
     <!-- /.content -->
-	
-	
-<!-- Modal -->
-<div class="modal fade" id="tambah" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Tambah Pasien</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form method="post" action="{{ url('master-data/pemilik/store_pasien') }}">
-        @csrf
-			<input type="hidden" name="kode_pemilik" value="{{$listPemilik->kode}}">
-			<input type="hidden" name="id_pemilik" value="{{$listPemilik->id}}">
-            <div class="form-group row">
-				{!! Form::label('nama_hewan', 'Nama Hewan', ['class' => 'col-sm-2 col-form-label']) !!}
-				<div class="col-sm-10">
-					{!! Form::text('nama_hewan', null, ['class'=>'form-control', 'placeholder'=>'Nama Hewan']) !!}
-				</div>
-			</div>
-			<div class="form-group row">
-				{!! Form::label('spesies_id', 'Jenis Hewan', ['class' => 'col-sm-2 col-form-label']) !!}
-				<div class="col-sm-10">
-					{!! Form::select('spesies_id', $var['spesies'], null, ['class'=>'form-control', 'placeholder'=>'Pilih Jenis Hewan', 'style'=>'width: 100%;', 'onchange'=>'ras()']) !!}
-				</div>
-			</div>
-			<div class="form-group row">
-				{!! Form::label('jenis_kelamin', 'Jenis Kelamin', ['class' => 'col-sm-2 col-form-label']) !!}
-				<div class="col-sm-10">
-					{!! Form::select('jenis_kelamin', ['Jantan'=>'Jantan', 'Betina'=>'Betina'], null, ['class'=>'form-control', 'placeholder'=>'Pilih Jenis Kelamin']) !!}
-				</div>
-			</div>
-        <br>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <input type="submit" class="btn btn-primary" value="Simpan">
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
+
+
 @endsection
 
 @section('javascript')

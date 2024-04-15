@@ -56,140 +56,113 @@
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-md-6">
+										<div class="col-md-12">
 											<div class="card">
 												<div class="card-header">
-													<h3>Data Pemilik</h3>
+                                                    <h3 style="text-align:center; margin:auto;">Data Pasien</h3>
 												</div>
 												<div class="card-content">
-													
-													
-													<div class="form-group row">
-														{!! Form::label('pemilik_id', 'Pemilik', ['class' => 'col-sm-2 col-form-label']) !!}
-														<div class="col-sm-10">
-															
-															<select name="pemilik_id" id="pemilik_id" class="form-control select2" style="width:100%" onchange="pemilik()" required>
-																<option value="0">Pilih Pemilik</option>
-																@foreach($var['pemilik'] as $row)
-																	<option value="{{$row->id}}">{{$row->nama}} - {{$row->alamat}}</option>
-																@endforeach
-																@if(!empty($var['curr_klinik']))
-																	<option value="{{$var['curr_klinik']->pemilik_id}}" selected >{{$var['curr_klinik']->nama_pemilik}} - {{$var['curr_klinik']->alamat_pemilik}}</option>
-																@endif
-															</select>
-															<small><a href="{{url('master-data/pemilik/create') }}">Klik Disini untuk menambah pemilik</a></small>
-														</div>
-													</div>
-													
-													<div class="form-group row">
-														{!! Form::label('alamat_pemilik', 'Alamat Pemilik', ['class' => 'col-sm-2 col-form-label']) !!}
-														<div class="col-sm-10">
-															{!! Form::text('alamat_pemilik', (!empty($var['curr_klinik'])?$var['curr_klinik']->alamat_pemilik:""), ['class'=>'form-control', 'placeholder'=>'Inputkan Alamat Pemilik', 'readonly']) !!}
-														</div>
-													</div>
-													<div class="form-group row">
-														{!! Form::label('telepon_pemilik', 'Telepon Pemilik', ['class' => 'col-sm-2 col-form-label']) !!}
-														<div class="col-sm-10">
-															{!! Form::text('telepon_pemilik',  (!empty($var['curr_klinik'])?$var['curr_klinik']->telepon_pemilik:""), ['class'=>'form-control', 'placeholder'=>'Inputkan Telepon Pemilik', 'readonly']) !!}
-														</div>
-													</div>
-													
-													
-													<!-- <div class="form-group row"> -->
-														<!-- {!! Form::label('ciri_ciri', 'Ciri - Ciri', ['class' => 'col-sm-2 col-form-label']) !!} -->
-														<!-- <div class="col-sm-10"> -->
-															{!! Form::hidden('ciri_ciri', null, ['class'=>'form-control', 'placeholder'=>'Inputkan Ciri - Ciri']) !!}
-														<!-- </div>
-													</div> -->
-													<div class="form-group row">
-														<!--{!! Form::label('no_periksa', 'Nomor Periksa', ['class' => 'col-sm-2 col-form-label']) !!}
-														<div class="col-sm-4">
-															{!! Form::text('no_periksa', ($var['method']=='create'?$var['noPeriksa']:null), ['class'=>'form-control', 'placeholder'=>'Inputkan Nomor Periksa']) !!}
-														</div>-->
-														{!! Form::label('tanggal_periksa', 'Tanggal Periksa', ['class' => 'col-sm-2 col-form-label']) !!}
-														<div class="col-sm-4">
-															{!! Form::text('tanggal_periksa', (!empty($var['curr_klinik'])?$var['curr_klinik']->tanggal_periksa:$var['tanggal_now']), ['class'=>'form-control', 'placeholder'=>'Inputkan Tanggal Periksa','autocomplete'=>'off']) !!}
-														</div>
-													</div>
-													<div class="form-group row">
-														{!! Form::label('pemeriksa', 'Pemeriksa', ['class' => 'col-sm-2 col-form-label required']) !!}
-														<div class="col-sm-10">
-															{!! Form::select('pemeriksa', $var['pemeriksa'],null, ['class'=>'form-control select2', 'placeholder'=>'Pilih Pemeriksa', 'style'=>'width: 100%;', 'required'=>'required']) !!}
-														</div>
-													</div>
-													@if(!empty($var['curr_klinik']))
-													<script>
-														window.addEventListener("load", function(){
-															$("#pemeriksa").val({{$var['curr_klinik']->pemeriksa}}).trigger("change");
-														});
-													</script>
-													@endif
-													<div class="form-group row">
-														{!! Form::label('keluhan', 'Keluhan', ['class' => 'col-sm-2 col-form-label']) !!}
-														<div class="col-sm-10">
-															{!! Form::textarea('keluhan', (!empty($var['curr_klinik'])?$var['curr_klinik']->keluhan:"-"), ['class'=>'form-control', 'placeholder'=>'Inputkan Keluhan', 'rows'=>4, 'required']) !!}
-														</div>
-													</div>
-													
-												</div>
-											</div>	
-										</div>
-										<div class="col-md-6">
-											<div class="card">
-												<div class="card-header">
-													<h3>Data Pasien</h3>
-												</div>
-												<div class="card-content">
-													<div class="form-group row">
-														 {!! Form::label('nama_hewan', 'Nama Hewan', ['class' => 'col-sm-2 col-form-label']) !!}
-														<div class="col-sm-10" id="list_hewan">
-															<select name="hewan" id="hewan" class="form-control select2" placeholder="Pilih Nama Hewan" style="width:100%" onchange="dataHewan()" required>
-																@if(!empty($var['curr_klinik']))
-																	<option value="{{$var['new_klinik_id']}}" selected >{{$var['curr_klinik']->nama_hewan}}</option>
-																	@foreach($var['list_hewan'] as $value)
-																		<option value="{{$value->id}}">{{$value->nama_hewan}}</option>
-																	@endforeach
-																@endif
-															</select>
-															<div id="new_hewan">
-															
-															</div>	
-														</div>
-													</div>
-													<div class="form-group row">
-														{!! Form::label('no_pasien', 'No. RM', ['class' => 'col-sm-2 col-form-label']) !!}
-														<div class="col-sm-10">
-															{!! Form::text('no_pasien', (!empty($var['curr_klinik'])?$var['curr_klinik']->no_pasien:""), ['class'=>'form-control', 'placeholder'=>'Inputkan No. RM','readonly','required']) !!}
-														</div>
-														<input type="hidden" id="new_no_pasien">
-													</div>
-													<div class="form-group row">
-														{!! Form::label('spesies_id', 'Jenis Hewan', ['class' => 'col-sm-2 col-form-labe required']) !!}
-														<div class="col-sm-10">
-															{!! Form::select('spesies_id', $var['spesies'], (!empty($var['curr_klinik'])?$var['curr_klinik']->spesies_id:""), ['class'=>'form-control', 'placeholder'=>'Pilih Jenis Hewan', 'style'=>'width: 100%;','required'=>'required']) !!}
-														</div>
-													</div>
-													<!-- <div id="areaRas"> -->
-														<!-- <div class="form-group row"> -->
-															<!-- {!! Form::label('ras_id', 'Ras', ['class' => 'col-sm-2 col-form-label']) !!} -->
-															<!-- <div class="col-sm-10"> -->
-																{!! Form::hidden('ras_id',null, ['class'=>'form-control', 'placeholder'=>'Pilih Ras', 'style'=>'width: 100%;']) !!}
-															<!-- </div>
-														</div>
-													</div> -->
-													<div class="form-group row">
-														{!! Form::label('jenis_kelamin', 'Jenis Kelamin', ['class' => 'col-sm-2 col-form-label']) !!}
-														<div class="col-sm-10">
-															{!! Form::select('jenis_kelamin', ['Jantan'=>'Jantan', 'Betina'=>'Betina'], (!empty($var['curr_klinik'])?$var['curr_klinik']->jenis_kelamin:""), ['class'=>'form-control', 'placeholder'=>'Pilih Jenis Kelamin']) !!}
-														</div>
-													</div>
-													<div class="form-group row">
-													   
-														{!! Form::label('umur', 'Umur', ['class' => 'col-sm-2 col-form-label']) !!}
-														<div class="col-sm-4">
-															{!! Form::text('umur', (!empty($var['curr_klinik'])?$var['curr_klinik']->umur:""), ['class'=>'form-control', 'placeholder'=>'Inputkan Umur','required'=>'required']) !!}
-														</div>
-													</div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group row">
+                                                                {!! Form::label('pemilik_id', 'Pemilik', ['class' => 'col-sm-2 col-form-label']) !!}
+                                                                <div class="col-sm-10">
+
+                                                                    <select name="pemilik_id" id="pemilik_id" class="form-control select2" style="width:100%" onchange="pemilik()" required>
+                                                                        <option value="0">Pilih Pasien</option>
+                                                                        @foreach($var['pemilik'] as $row)
+                                                                            <option value="{{$row->id}}">{{$row->nama}} - {{$row->alamat}}</option>
+                                                                        @endforeach
+                                                                        @if(!empty($var['curr_klinik']))
+                                                                            <option value="{{$var['curr_klinik']->pemilik_id}}" selected >{{$var['curr_klinik']->nama_pemilik}} - {{$var['curr_klinik']->alamat_pemilik}}</option>
+                                                                        @endif
+                                                                    </select>
+                                                                    <small><a href="{{url('master-data/pemilik/create') }}">Klik Disini untuk menambah pasien</a></small>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group row">
+                                                                {!! Form::label('alamat_pemilik', 'Alamat', ['class' => 'col-sm-2 col-form-label']) !!}
+                                                                <div class="col-sm-10">
+                                                                    {!! Form::text('alamat_pemilik', (!empty($var['curr_klinik'])?$var['curr_klinik']->alamat_pemilik:""), ['class'=>'form-control', 'placeholder'=>'Inputkan Alamat Pemilik', 'readonly']) !!}
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                {!! Form::label('telepon_pemilik', 'Telepon', ['class' => 'col-sm-2 col-form-label']) !!}
+                                                                <div class="col-sm-10">
+                                                                    {!! Form::text('telepon_pemilik',  (!empty($var['curr_klinik'])?$var['curr_klinik']->telepon_pemilik:""), ['class'=>'form-control', 'placeholder'=>'Inputkan Telepon Pemilik', 'readonly']) !!}
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                {!! Form::label('tanggal_periksa', 'Tanggal Periksa', ['class' => 'col-sm-2 col-form-label']) !!}
+                                                                <div class="col-sm-4">
+                                                                    {!! Form::text('tanggal_periksa', (!empty($var['curr_klinik'])?$var['curr_klinik']->tanggal_periksa:$var['tanggal_now']), ['class'=>'form-control', 'placeholder'=>'Inputkan Tanggal Periksa','autocomplete'=>'off']) !!}
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                {!! Form::label('pemeriksa', 'Pemeriksa', ['class' => 'col-sm-2 col-form-label required']) !!}
+                                                                <div class="col-sm-10">
+                                                                    {!! Form::select('pemeriksa', $var['pemeriksa'],null, ['class'=>'form-control select2', 'placeholder'=>'Pilih Pemeriksa', 'style'=>'width: 100%;', 'required'=>'required']) !!}
+                                                                </div>
+                                                            </div>
+                                                            @if(!empty($var['curr_klinik']))
+                                                            <script>
+                                                                window.addEventListener("load", function(){
+                                                                    $("#pemeriksa").val({{$var['curr_klinik']->pemeriksa}}).trigger("change");
+                                                                });
+                                                            </script>
+                                                            @endif
+                                                            <div class="form-group row">
+                                                                {!! Form::label('keluhan', 'Keluhan', ['class' => 'col-sm-2 col-form-label']) !!}
+                                                                <div class="col-sm-10">
+                                                                    {!! Form::textarea('keluhan', (!empty($var['curr_klinik'])?$var['curr_klinik']->keluhan:"-"), ['class'=>'form-control', 'placeholder'=>'Inputkan Keluhan', 'rows'=>4, 'required']) !!}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group row">
+                                                                {!! Form::label('no_pasien', 'No. RM', ['class' => 'col-sm-2 col-form-label']) !!}
+                                                                <div class="col-sm-10">
+                                                                    {!! Form::text('no_pasien', (!empty($var['curr_klinik'])?$var['curr_klinik']->no_pasien:""), ['class'=>'form-control', 'placeholder'=>'Inputkan No. RM','readonly','required']) !!}
+                                                                </div>
+                                                                <input type="hidden" id="new_no_pasien">
+                                                            </div>
+                                                            <div class="form-group row">
+
+                                                                {!! Form::label('nama_suami', 'Nama Suami', ['class' => 'col-sm-2 col-form-label']) !!}
+                                                                <div class="col-sm-10">
+                                                                    {!! Form::text('nama_suami', (!empty($var['curr_klinik'])?$var['curr_klinik']->nama_suami:""), ['class'=>'form-control', 'placeholder'=>'Input Nama Suami','required'=>'required']) !!}
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+
+                                                                {!! Form::label('tensi', 'Tensi', ['class' => 'col-sm-2 col-form-label']) !!}
+                                                                <div class="col-sm-4">
+                                                                    {!! Form::text('tensi', (!empty($var['curr_klinik'])?$var['curr_klinik']->tensi:""), ['class'=>'form-control', 'placeholder'=>'TD | Cth : 120/80','required'=>'required']) !!}
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+
+                                                                {!! Form::label('bb', 'BB (kg)', ['class' => 'col-sm-2 col-form-label']) !!}
+                                                                <div class="col-sm-4">
+                                                                    {!! Form::number('bb', (!empty($var['curr_klinik'])?$var['curr_klinik']->bb:""), ['class'=>'form-control', 'placeholder'=>'Berat Badan','required'=>'required']) !!}
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+
+                                                                {!! Form::label('tb', 'TB (cm)', ['class' => 'col-sm-2 col-form-label']) !!}
+                                                                <div class="col-sm-4">
+                                                                    {!! Form::number('tb', (!empty($var['curr_klinik'])?$var['curr_klinik']->tb:""), ['class'=>'form-control', 'placeholder'=>'Tinggi Badan','required'=>'required']) !!}
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                {!! Form::label('tanggal_lahir', 'HPL', ['class' => 'col-sm-2 col-form-label']) !!}
+                                                                <div class="col-sm-6">
+                                                                    {!! Form::text('tanggal_lahir', (!empty($var['curr_klinik'])?date('d-m-Y',strtotime($var['curr_klinik']->tanggal_lahir)):""), ['class'=>'form-control', 'placeholder'=>'Tanggal Lahir','required'=>'required']) !!}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 												</div>
 											</div>
 										</div>
@@ -211,7 +184,7 @@
 											</div>
 										</div>
 									</div>
-                                        
+
                                     {!! Form::close() !!}
                                 </div>
                             </div>
@@ -253,11 +226,12 @@
                 $("#alamat_pemilik").val(data[1].alamat);
                 $("#telepon_pemilik").val(data[1].telepon);
                 $("#new_no_pasien").val(data[1].kode+'/'+data[0]);
-				
+                $("#no_pasien").val(data[1].kode+'/'+data[0]);
+
                 console.log(data);
             });
-			ambilDataHewan(pemilikId);
-        }    
+			//ambilDataHewan(pemilikId);
+        }
 		function dataHewan(klinikId = '') {
             if(klinikId == '') klinikId = $("#hewan").val();
 			if($("#hewan").val() != "999999999999"){
@@ -290,7 +264,7 @@
                 $("#no_periksa").val(data);
             });
         }
-		
+
         function penangananAksi(penanganan = ''){
             if(penanganan == '') penanganan = $("#tindakan").val();
 
@@ -301,7 +275,7 @@
             }else{
 
             }
-        }    
+        }
 
 		function ambilDataHewan(pemilikId){
             if(pemilikId == '') pemilikId = $("#pemilik_id").val();
@@ -309,7 +283,7 @@
 			$("#hewan").load("{{ url('klinik/hewan') }}"+"?pemilikId="+pemilikId);
 			//$("#hewan").append("<option value='999999999'>Lainnya</option>");
         }
-		
+
         function ras(aksi = '', spesiesId = '', rasId = '') {
             if(spesiesId == '') spesiesId = $("#spesies_id").val();
             $("#areaRas").load("{{ url('klinik/area-ras') }}"+"?spesiesId="+spesiesId+"&rasId="+rasId);
@@ -384,8 +358,8 @@
 					umur:{
                         requred: true,
                     },
-					
-					
+
+
                 },
                 messages: {
                     no_pasien: {
@@ -422,6 +396,10 @@
             });
 
             $('#tanggal_periksa').datepicker({
+                autoclose: true,
+                format: 'dd-mm-yyyy'
+            });
+            $('#tanggal_lahir').datepicker({
                 autoclose: true,
                 format: 'dd-mm-yyyy'
             });

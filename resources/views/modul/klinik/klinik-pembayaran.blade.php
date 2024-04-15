@@ -29,26 +29,26 @@
                                 <div class="pad">
                                     <div class="row">
 										<div class="col-md-12">
-											
+
 										</div>
-									</div> 
+									</div>
 									<div class="row">
 										<div class="col-md-6">
 											<h4>Data Pasien</h4>
 											<table class="table table-hover">
 												<tbody>
-													<tr><td>Nama pemilik</td><td align="left">: {{$var['curr_klinik']->nama_pemilik}}</td></tr>
-													<tr><td>Nama Hewan</td><td align="left">: {{$var['curr_klinik']->nama_hewan}}</td></tr>
-													<tr><td>Spesies</td><td align="left">: {{$var['curr_klinik']->klinik->spesies->nama_spesies}}</td></tr>
-													<tr><td>Signalment</td><td align="left">: {{$var['curr_klinik']->signalement}}</td></tr>
-													<tr><td>Anamnesa</td><td align="left">: {{$var['curr_klinik']->anamnesia}}</td></tr>
-													<tr><td>Diagnosa</td><td align="left">: {{$var['curr_klinik']->penyakit}}</td></tr>
+													<tr><td>Nama pasien</td><td align="left">: {{$var['curr_klinik']->nama_pemilik}}</td></tr>
+													<tr><td>Tinggi Badan</td><td align="left">: {{$var['curr_klinik']->tb}}</td></tr>
+													<tr><td>Berat Badan</td><td align="left">: {{$var['curr_klinik']->bb}}</td></tr>
+													<tr><td>Keluhan</td><td align="left">: {{$var['curr_klinik']->keluhan}}</td></tr>
+													<tr><td>Hasil Pemeriksaan</td><td align="left">: {{$var['curr_klinik']->signalement}}</td></tr>
+													<tr><td>Diagnosis</td><td align="left">: {{$var['curr_klinik']->diagnosa}}</td></tr>
 												</tbody>
 											</table>
 										</div>
 										<div class="col-md-6">
 											<h4>Penanganan</h4>
-											
+
 											<table class="table table-hover">
 												<thead>
 													<tr class="bg-info">
@@ -59,8 +59,8 @@
 												</thead>
 												<tbody id="my_table">
 													@if(!empty($var['klinik_dosis']))
-														@php 
-															$i = 1; 
+														@php
+															$i = 1;
 														@endphp
 														@foreach($var['klinik_dosis'] as $dosis)
 															<tr class="tbl{{$i}}">
@@ -73,7 +73,7 @@
 												</tbody>
 											</table>
 										</div>
-										
+
 										<div class="col-md-12">
 											{!! Form::open(['id'=>'form-klinik', 'method'=>'POST', 'url'=>'/klinik/simpan_pembayaran']) !!}
 											<input type="hidden" name="from_url" value="{{$var['from_url']}}">
@@ -82,9 +82,9 @@
 												<div class="col-md-8">
 													<h4>Rincian Pembayaran</h4>
 												</div>
-												<div class="col-md-4" style="text-align:right">
+												{{-- <div class="col-md-4" style="text-align:right">
 													<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Tambah Pelayanan</a>
-												</div>
+												</div> --}}
 												<!-- Modal -->
 												<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 												  <div class="modal-dialog">
@@ -117,147 +117,123 @@
 													<tr class="bg-info">
 														<td>No. </td>
 														<td>Pelayanan</td>
+														<td>Qty</td>
 														<td>Tarif</td>
+                                                        <td>Total</td>
 														<td></td>
 													</tr>
 												</thead>
 												<input type="hidden" name="klinik_terapi_id" value={{$var['curr_klinik']->id}}>
 												<tbody id="tbl-pembayaran">
 													@if(!empty($var['klinik_dosis']))
-														@php 
-															$i = 1; 
+														@php
+															$i = 1;
 															$pengobatan = 0;
 															$total = 0;
 														@endphp
 														@foreach($var['klinik_dosis'] as $dosis)
-															
-															@if($pengobatan == 0 && $dosis->tindakan == 2)
-																@php $pad = $var['helper']->getHarga($dosis->tindakan,$var['curr_klinik']->klinik->spesies_id) @endphp
+
+															@if($dosis->tindakan == 1)
+																@php $pad = $var['helper']->getHarga($dosis->tindakan,$dosis->terapi_id) @endphp
 																<tr class="tbl{{$i}}">
 																	<td>{{$i}} <input type="hidden" class="counter" value="{{$i}}"></td>
 																	<td>
 																		<input type="hidden" name="tindakan_id[]" value="{{$dosis->tindakan}}">
-																		{{$pad->nama_pelayanan}}
-																		
-																		<input type="hidden" name="spesies_id[]" value={{$var['curr_klinik']->klinik->spesies_id}}>
+																		{{$pad->obat}}
+																	</td>
+                                                                    <td>
+                                                                        <input type="hidden" name="dosis[]" value="{{$dosis->dosis}}">
+																		{{$dosis->dosis}}
+                                                                    </td>
+																	<td align="right" style="text-align:right">
+																		<input type="hidden" name="terapi_id[]" value="{{$pad->id}}">
+																		<input type="hidden" name="tarif[]" id="tarif{{$i}}" value="{{$pad->harga_jual}}">
+																		Rp. {{number_format($pad->harga_jual,0,",",".")}}
 																	</td>
 																	<td align="right" style="text-align:right">
-																		<input type="hidden" name="terapi_id[]" value="2575">
-																		<input type="hidden" name="tarif[]" id="tarif{{$i}}" value="{{$pad->tarif}}">
-																		Rp. {{number_format($pad->tarif,0,",",".")}}
+																		Rp. {{number_format(($pad->harga_jual * $dosis->dosis),0,",",".")}}
 																	</td>
 																	<td>
 																		<a href="#" onclick="hapus({{$i}})" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
 																	</td>
 																</tr>
-																@php 
-																	$total += $pad->tarif;
-																	$pengobatan = 1; 
-																	$i++; 
+																@php
+																	$total += ($pad->harga_jual * (int)$dosis->dosis);
+																	$pengobatan = 1;
+																	$i++;
 																@endphp
-															@elseif($pengobatan == 1 && $dosis->tindakan == 2)
-															
 															@else
-																@php $pad = $var['helper']->getHarga($dosis->tindakan,$var['curr_klinik']->klinik->spesies_id,$dosis->terapi_id) @endphp
+																@php $pad = $var['helper']->getHarga($dosis->tindakan,$dosis->terapi_id) @endphp
 																@if(!empty($pad))
 																	<tr class="tbl{{$i}}">
 																		<td>{{$i}} <input type="hidden" class="counter" value="{{$i}}"></td>
 																		<td>
 																			<input type="hidden" name="tindakan_id[]" value="{{$dosis->tindakan}}">
-																			{{$pad->nama_pelayanan}}
-																			<input type="hidden" name="spesies_id[]" value={{$var['curr_klinik']->klinik->spesies_id}}>
-																			
+																			{{$pad->nama}}
 																		</td>
+                                                                        <td>
+                                                                            <input type="hidden" name="dosis[]" value="{{$dosis->dosis}}">
+                                                                        </td>
 																		<td align="right" style="text-align:right">
 																			<input type="hidden" name="terapi_id[]" value="{{$dosis->terapi_id}}">
 																			<input type="hidden" name="tarif[]" id="tarif{{$i}}" value="{{$pad->tarif}}">
+																			Rp. {{number_format($pad->tarif,0,",",".")}}
+																		</td>
+																		<td align="right" style="text-align:right">
 																			Rp. {{number_format($pad->tarif,0,",",".")}}
 																		</td>
 																		<td>
 																			<a href="#" onclick="hapus({{$i}})" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
 																		</td>
 																	</tr>
-																	@php 
+																	@php
 																		$total += $pad->tarif;
-																		$i++; 
+																		$i++;
 																	@endphp
 																@else
 																	@php continue; @endphp
 																@endif
 															@endif
-															
-															
-															
+
+
+
 														@endforeach
 													@endif
-													@if(!empty($var['layan']))
-														@foreach($var['layan'] as $layan)
-															
-															
-																
-																<tr class="tbl'+counter+'">
-																	<td>{{$i}}</td>
-																	<td><input type="hidden" name="nama_layanan[]" value="{{$layan->nama_layanan}}">{{$layan->nama_layanan}}</td>
-																	<td align="right" style="text-align:right"><input type="hidden" name="tarif_layanan[]" value="{{$layan->tarif}}" id="tarif{{$i}}">Rp. {{number_format($layan->tarif,0,"",".")}}</td>
-																	<td><a href="#" class="delete_row btn btn-danger btn-xs" onclick="hapus('{{$i}}')"><input type="hidden" name="id_detail[]" value="" class="id_detail"><i class="fa fa-trash"></i></a></td>
-																</tr>
-																@php 
-																	$total += $layan->tarif;
-																	$pengobatan = 1; 
-																	$i++; 
-																@endphp
-															
-															
-															
-															
-														@endforeach
-													@endif
-												
 												</tbody>
 												<tfoot>
 													<tr class="bg-secondary">
-														<th colspan=2><b>Total <input type="hidden" name="total" id="total" value="{{$total}}"></b></th>
+														<th colspan=4><b>Total <input type="hidden" name="total" id="total" value="{{$total}}"></b></th>
 														<th align="right" style="text-align:right" ><b id="total_view">Rp. {{number_format($total,0,",",".")}}</b></th>
-														
+
 														<th></th>
 													</tr>
-													
-													
+
+
 												</tfoot>
 											</table>
-											<div class="form-group row">
+											{{-- <div class="form-group row">
 												{!! Form::label('no_kwitansi', 'No. Kwitansi', ['class' => 'col-sm-2 col-form-label required']) !!}
 												<div class="col-sm-10">
-													
+
 													{!! Form::text('no_kwitansi', (!empty($var['pembayaran']->first())?$var['pembayaran']->first()->no_kwitansi:""), ['class'=>'form-control', 'placeholder'=>'Inputkan No. kwitansi', 'required']) !!}
 												</div>
 											</div>
 											<div class="form-group row">
 												{!! Form::label('no_kwitansi', 'No. Kwitansi', ['class' => 'col-sm-2 col-form-label required']) !!}
 												<div class="col-sm-10">
-													
+
 													{!! Form::text('no_kwitansi', (!empty($var['pembayaran']->first())?$var['pembayaran']->first()->no_kwitansi:""), ['class'=>'form-control', 'placeholder'=>'Inputkan No. kwitansi', 'required']) !!}
 												</div>
-											</div>
-											<tr class="bg-secondary">
-													<th colspan=2><b>Kegiatan</b></th>
-													<th align="right" style="text-align:right" >
-														<select name="kegiatan" class="form form-control">
-															<option value="1">Pasif</option>
-															<option value="2">Aktif</option>
-														</select>
-													</th>
-													
-													<th></th>
-												</tr>
+											</div> --}}
+
 											<hr />
 											{!! Form::submit('Bayar', ['class'=>'btn btn-primary col-md-12']) !!}
 											{!! Form::close() !!}
 										</div>
 										<div class="col-md-12">
-											
+
 										</div>
-										
+
 									</div>
                                 </div>
                             </div>
@@ -278,7 +254,7 @@
 @section('javascript')
     <script>
 		$(document).ready(function(){
-			
+
 			$("#simpan_layanan").click(function(){
 				var counter = parseInt($(".counter:last").val())+1;
 				var id = $("#layanan").val();
@@ -301,11 +277,11 @@
 					$("#total_view").html(formatRupiah($("#total").val(),"Rp. "));
 					var id = $("#layanan").val(0);
                 });
-				
+
 			});
 		});
 		function update_harga (){
-			
+
 		}
 		function formatRupiah(angka, prefix){
 			var number_string = angka.replace(/[^,\d]/g, '').toString(),
@@ -313,13 +289,13 @@
 			sisa     		= split[0].length % 3,
 			rupiah     		= split[0].substr(0, sisa),
 			ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
- 
+
 			// tambahkan titik jika yang di input sudah menjadi angka ribuan
 			if(ribuan){
 				separator = sisa ? '.' : '';
 				rupiah += separator + ribuan.join('.');
 			}
- 
+
 			rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
 			return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
 		}

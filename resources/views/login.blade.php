@@ -9,7 +9,7 @@
         <link rel="icon" href="{{ asset('fabadmin/images/favicon.ico') }}">
 
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>{{ env('APP_NAME', 'siBavet') }} | Login</title>
+        <title>{{ env('APP_NAME', 'EMR dr. Dawi SpOG') }} | Login</title>
 
         <!-- Bootstrap 4.0-->
         <link rel="stylesheet" href="{{ asset('fabadmin/assets/vendor_components/bootstrap/dist/css/bootstrap.min.css') }}">
@@ -50,8 +50,8 @@
                 <div class="col-lg-4 col-md-8 col-12">
                     <div class="login-box">
                         <div class="login-box-body">
-                            <h3 class="text-center">siBavet</h3>
-                            <p class="login-box-msg">Sistem Informasi Balai Veteriner</p>
+                            <h3 class="text-center">EMR dr. Dawi, SpOG</h3>
+                            <p class="login-box-msg">Electronic Medical Record dr. Dawi, SpOG</p>
 
                             @if($errors->has('gagal'))
                                 <div class="alert alert-danger alert-dismissible">

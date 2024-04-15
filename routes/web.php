@@ -55,6 +55,7 @@ Route::prefix('master-data')->group(function () {
     Route::resource('penyakit', 'MasterData\PenyakitController');
     Route::post('obat/cek-validasi', 'MasterData\ObatController@cekValidasi');
     Route::resource('obat', 'MasterData\ObatController');
+    Route::resource('layanan', 'MasterData\LayananController');
 	Route::post('daftar_harga/cek-validasi', 'MasterData\ObatController@cekValidasi');
     Route::resource('daftar_harga', 'MasterData\DaftarHargaController');
     Route::post('operasi/cek-validasi', 'MasterData\OperasiController@cekValidasi');
@@ -124,7 +125,7 @@ Route::prefix('lab')->group(function () {
         Route::post('kesmavet/form04', 'Laboratorium\KesmavetController@postForm04');
         Route::post('kesmavet/formhasil', 'Laboratorium\KesmavetController@postFormHasil');
 
-        
+
         Route::get('pakan', 'Laboratorium\PakanController@index');
         Route::get('pakan/form01', 'Laboratorium\PakanController@getForm01');
         Route::get('pakan/{id}/form01', 'Laboratorium\PakanController@getForm01');
@@ -140,7 +141,7 @@ Route::prefix('lab')->group(function () {
 
     });
 
-    
+
     Route::get('keswan/{id}/cetak01', 'Laboratorium\KeswanController@getCetak01');
     Route::get('keswan/{id}/cetak02', 'Laboratorium\KeswanController@getCetak02');
     Route::get('keswan/{id}/cetak03', 'Laboratorium\KeswanController@getCetak03');
@@ -275,20 +276,20 @@ Route::prefix('laporan')->group(function () {
 
     Route::group(['middleware' => ['ajax']], function (){
         Route::post('lab-keswan/tampil', 'Laporan\LaporanKeswanController@cetakPengujian');
-        Route::post('lab-pakan/tampil', 'Laporan\LaporanPakanController@cetakPengujian');        
-        Route::post('lab-kesmavet/tampil', 'Laporan\LaporanKesmavetController@cetakPengujian');        
-        Route::get('lab-keswan', 'Laporan\LaporanKeswanController@formCetakPengujian');        
-        Route::get('lab-kesmavet', 'Laporan\LaporanKesmavetController@formCetakPengujian');        
+        Route::post('lab-pakan/tampil', 'Laporan\LaporanPakanController@cetakPengujian');
+        Route::post('lab-kesmavet/tampil', 'Laporan\LaporanKesmavetController@cetakPengujian');
+        Route::get('lab-keswan', 'Laporan\LaporanKeswanController@formCetakPengujian');
+        Route::get('lab-kesmavet', 'Laporan\LaporanKesmavetController@formCetakPengujian');
         Route::get('lab-pakan', 'Laporan\LaporanPakanController@formCetakPengujian');
 
         // Route::get('lab-keswan', 'Laporan\LaporanKeswanController@formCetakPengujian');
         // Route::post('lab-keswan', 'Laporan\LaporanKeswanController@CetakPengujian');
 
-        
+
         // Route::get('lab-kesmavet', 'Laporan\LaporanKesmavetController@formCetakPengujian');
         // Route::post('lab-kesmavet', 'Laporan\LaporanKesmavetController@CetakPengujian');
 
-        
+
         // Route::get('lab-pakan', 'Laporan\LaporanPakanController@formCetakPengujian');
         // Route::post('lab-pakan', 'Laporan\LaporanPakanController@CetakPengujian');
     });

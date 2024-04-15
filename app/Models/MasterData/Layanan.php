@@ -4,11 +4,11 @@ namespace App\Models\MasterData;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Obat extends Model
+class Layanan extends Model
 {
-    protected $table = 'obat';
+    protected $table = 'layanan';
     protected $fillable = [
-        'kode', 'obat','satuan','harga_jual'
+        'nama', 'tarif'
     ];
 
     public function scopeCari($query, $cari) {

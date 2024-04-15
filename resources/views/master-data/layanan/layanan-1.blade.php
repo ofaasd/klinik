@@ -5,12 +5,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Obat
+            Layanan
         </h1>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#"><i class="fa fa-dashboard"></i> Beranda</a></li>
             <li class="breadcrumb-item"><a href="#">Master Data</a></li>
-            <li class="breadcrumb-item active">Obat</li>
+            <li class="breadcrumb-item active">Layanan</li>
         </ol>
     </section>
 
@@ -24,10 +24,9 @@
                     <div class="box-body">
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs">
-                            <li class="nav-item"><a href="{{ url('master-data/obat') }}" class="nav-link active"><span class="hidden-sm-up"><b>Lihat Data</b></span> <span class="hidden-xs-down"><b>Lihat Data</b></span></a></li>
-                            @can('Create Obat')
-                                <li class="nav-item"><a href="{{ url('master-data/obat/create') }}" class="nav-link"><span class="hidden-sm-up"><b>Tambah Data</b></span> <span class="hidden-xs-down"><B>Tambah Data</b></span></a></li>
-                            @endcan
+                            <li class="nav-item"><a href="{{ url('master-data/layanan') }}" class="nav-link active"><span class="hidden-sm-up"><b>Lihat Data</b></span> <span class="hidden-xs-down"><b>Lihat Data</b></span></a></li>
+                            <li class="nav-item"><a href="{{ url('master-data/layanan/create') }}" class="nav-link"><span class="hidden-sm-up"><b>Tambah Data</b></span> <span class="hidden-xs-down"><B>Tambah Data</b></span></a></li>
+
                         </ul>
                         <!-- Tab panes -->
                         <div class="tab-content tabcontent-border">
@@ -35,9 +34,9 @@
                                 <div class="pad">
                                     <div class="row">
                                         <div class="col-lg-6">
-                                            @can('Create Obat')
-                                                <a href="{{ url('master-data/obat/create') }}" class="btn btn-primary"><b>Tambah Data</b></a>
-                                            @endcan
+
+                                            <a href="{{ url('master-data/layanan/create') }}" class="btn btn-primary"><b>Tambah Data</b></a>
+
                                         </div>
                                         <div class="col-lg-6">
                                             <form method="get" action="">
@@ -56,48 +55,43 @@
                                             <thead>
                                                 <tr class="bg-dark">
                                                     <th width="100px" style="text-align:center;">Aksi</th>
-                                                    <th style="text-align:center;">Kode</th>
-                                                    <th style="text-align:center;">Obat</th>
-                                                    <th style="text-align:center;">Satuan</th>
-                                                    <th style="text-align:center;">Harga Jual</th>
+                                                    <th style="text-align:center;">Nama Layanan</th>
+                                                    <th style="text-align:center;">Tarif (Rp)</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                             @php
                                                 $no = 0;
                                             @endphp
-                                            @foreach($listObat as $item)
+                                            @foreach($listLayanan as $item)
                                                 @php
                                                     $no++;
                                                 @endphp
                                                 <tr>
                                                     <td style="text-align:center">
                                                         <div class="btn-group">
-                                                            {!! Form::open(['method'=>'delete', 'url'=>'/master-data/obat/'.$item->id.$var['url']['all'], 'class'=> 'delete_form']) !!}
+                                                            {!! Form::open(['method'=>'delete', 'url'=>'/master-data/layanan/'.$item->id.$var['url']['all'], 'class'=> 'delete_form']) !!}
                                                             {!! Form::hidden('nomor', $no, ['class'=>'form-control']) !!}
                                                             <div class="btn-group btn-group-xs" role="group" aria-label="Basic example">
-                                                                @can('Delete Obat')
-                                                                    <button type="submit" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></button>
-                                                                @endcan
-                                                                @can('Update Obat')
-                                                                    <a href="{{ url('/master-data/obat/'.$item->id.'/edit'.$var['url']['all'])}}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></a>
-                                                                @endcan
-                                                                <a href="{{ url('/master-data/obat/'.$item->id.$var['url']['all'])}}" class="btn btn-info btn-xs"><i class="fa fa-search"></i></a>
+
+                                                                <button type="submit" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></button>
+
+                                                                <a href="{{ url('/master-data/layanan/'.$item->id.'/edit'.$var['url']['all'])}}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></a>
+
+                                                                <a href="{{ url('/master-data/layanan/'.$item->id.$var['url']['all'])}}" class="btn btn-info btn-xs"><i class="fa fa-search"></i></a>
                                                             </div>
                                                             {!! Form::close() !!}
                                                         </div>
                                                     </td>
-                                                    <td>{{ $item->kode }}</td>
-                                                    <td>{{ $item->obat }}</td>
-                                                    <td>{{ $item->satuan }}</td>
-                                                    <td>{{ $item->harga_jual }}</td>
+                                                    <td>{{ $item->nama }}</td>
+                                                    <td>{{ number_format($item->tarif,0,",",".") }}</td>
                                                 </tr>
                                             @endforeach
                                             </tbody>
                                         </table>
                                     </div>
                                     <div class="col-lg-8 ml-auto">
-                                            {{ $listObat->render() }}
+                                            {{ $listLayanan->render() }}
                                     </div>
                                 </div>
                             </div>

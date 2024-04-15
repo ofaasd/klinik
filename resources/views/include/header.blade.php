@@ -6,7 +6,7 @@
 <link rel="icon" href="{{ asset('fabadmin/images/icon.png') }}">
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<title>{{ env('APP_NAME', 'siBavet') }}</title>
+<title>{{ env('APP_NAME', 'EMR dr. Dawi SpOG') }}</title>
 
 <!-- Bootstrap 4.0-->
 <link rel="stylesheet" href="{{ asset('fabadmin/assets/vendor_components/bootstrap/dist/css/bootstrap.min.css') }}">
@@ -64,9 +64,9 @@
         -webkit-order: 1;
                 order: 1;
     }
-	.required:after{ 
-        content:'*'; 
-        color:red; 
+	.required:after{
+        content:'*';
+        color:red;
         padding-left:5px;
     }
 </style>

@@ -7,9 +7,9 @@
         <h1>
             Detail Periksa {{$listKlinik->nama_hewan}}
         </h1>
-        
+
         <h3>
-            Pemilik : {{$listKlinik->pemilik->nama}}
+            Pasien : {{$listKlinik->pemilik->nama}}
         </h3>
     </section>
 
@@ -21,39 +21,35 @@
                 <div class="box box-default">
                     <!-- /.box-header -->
                     <div class="box-body">
-                    <h4> 
-                        Data Hewan : {{$listKlinik->jenis_kelamin}} - {{$listKlinik->spesies['nama_spesies']}} - {{$listKlinik->umur}} Tahun
-                    </h4>
                     <h4>
                         Nomor Rekam Medis : {{$listKlinik->no_pasien}}
-                    </h4>    
+                    </h4>
                         <table border=1 class="table">
                             <thead>
-                                <tr><th>No</th><th>Tanggal Periksa</th><th>Signalment</th><th>Anamnesa</th><th>Diagnosa</th><th>Tindakan Penanganan dan Keterangan Penanganan</th><th>Keterangan</th><th>Pemeriksa</th><th>Paramedis</th><th>Aksi</th></tr>
+                                <tr><th>No</th><th>Tanggal Periksa</th><th>Keluhan</th><th>Hasil</th><th>Diagnosa</th><th>Tindakan</th><th>Keterangan</th><th>Pemeriksa</th><th>Paramedis</th><th>Aksi</th></tr>
                             </thead>
                             <tbody>
                                 @php
                                     $no = 1;
                                 @endphp
-                                @foreach($klinikTerapi as $dat)                        
+                                @foreach($klinikTerapi as $dat)
                                 <tr>
-                                    <td>{{$no}}</td><td>{{date('d F Y',strtotime($dat->tanggal_periksa))}}</td><td>{{$dat->signalement}}</td><td>{{$dat->anamnesia}}</td><td>{{$diagnosa[$dat->id]->penyakit}}</td>
+                                    <td>{{$no}}</td><td>{{date('d F Y',strtotime($dat->tanggal_periksa))}}</td><td>{{$dat->keluhan}}</td><td>{{$dat->signalement}}</td><td>{{$dat->diagnosa}}</td>
                                     <td>
                                     @foreach($dosis[$dat->id] as $dos)
-										
+
 										{{-- @if(date('Y-m-d h:i:s',strtotime($dos->created_at)) == date('Y-m-d h:i:s',strtotime($dat->created_at))) --}}
-										
-											@if($dos->tindakan == 1 or $dos->tindakan == 2 or $dos->tindakan ==3 or $dos->tindakan ==4)        
-												{{$dos->obat}}
-											@elseif($dos->tindakan == 5)
-												Operasi {{$var['helper']->terapi($dos->tindakan,$dos->terapi_id)}}
+
+											@if($dos->tindakan == 1)
+												{{$dos->obat}} <br />(
+                                                {{$dos->dosis}} pcs),
 											@endif
-											{{$dos->dosis}} ,
+
 										{{-- @endif   --}}
                                     @endforeach
                                     </td><td>{{$dat->keterangan}}</td><td>{{$dat->nmpemeriksa}}</td><td>{{$dat->paramedis}}</td>
                                     <td>
-                                    <!--<button class="btn btn-primary" onclick="editTerapi('{{$dat->id}}','{{$dat->klinik_id}}','{{$dat->anamnesia}}','{{$dat->keterangan}}','{{$dat->paramedis}}','{{$diagnosa[$dat->id]->id}}','{{$diagnosa[$dat->id]->penyakit}}','{{$dat->tindakan}}','{{date("Y-m-d",strtotime($dat->tanggal_periksa))}}')">Edit Data</button>-->
+
 									<div class="row">
 										<div class="col-md-12" style="margin:5px 0">
 											<a href="{{ url('/klinik/edit_pendaftaran/'.$dat->id.'/detail')}}" class="btn btn-primary btn-xs">Edit Pendaftaran</a><br />
@@ -62,11 +58,11 @@
 											<!--<button class="btn btn-primary" onclick="editObat('{{$dat->id}}','{{$dat->klinik_id}}','{{$dat->tindakan}}','{{$dat->created_at}}')">Edit Obat</button>-->
 											<a href="{{ url('/klinik/add_pemeriksaan/'.$dat->id.'/detail')}}" class="btn btn-success btn-xs">Edit Pemeriksaan</a><br />
 										</div>
-										
+
 										<div class="col-md-12" style="margin:5px 0">
 											<a href="{{ url('/klinik/edit_pembayaran/'.$dat->id.'/detail')}}" class="btn btn-info btn-xs">Edit Pembayaran</a><br />
 										</div>
-									
+
 										<div class="col-md-12">
 											<a href="#" class="btn btn-danger btn-xs" onclick="hapusRiwayat('{{$dat->klinik_id}}','{{$dat->id}}','{{$dat->created_at}}','{{date('d F Y',strtotime($dat->tanggal_periksa))}}')">Hapus Riwayat</a>
 										</div>
@@ -76,8 +72,8 @@
 
                                 @php
                                     $no++;
-                                @endphp                                
-                                @endforeach    
+                                @endphp
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -87,7 +83,7 @@
             </div>
         </div>
 
-        
+
 
 <!-- Modal -->
 <div class="modal fade" id="modaledit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -106,12 +102,7 @@
             <input type="hidden" name="klinik_id" id="klinik_id">
             Tanggal Periksa : <input type="date" id="tgl_periksa" name="tgl_periksa" class="form-control">
             Anamnesa : <input type="text" id="anamnesa" name="anamnesa" class="form-control">
-            Diagnosa : 
-            <select id="diagnosa" name="diagnosa" class="form-control">
-            @foreach($var['penyakit'] as $pen)
-                <option value="{{$pen->id}}">{{$pen->penyakit}}</option>
-            @endforeach
-            </select>
+            Diagnosa : <input type="text" id="penyakit" name="penyakit" class="form-control">
             Keterangan : <input type="text" name="ket" id="ket" class="form-control">
             Paramedis : <input type="text" name="paramedis" id="paramedis" class="form-control">
         <br>
@@ -134,7 +125,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">             
+      <div class="modal-body">
         {!! Form::open(['id'=>'form-klinik', 'method'=>'POST', 'url'=>'/klinik/updateObat/'.$var['url']['all']]) !!}
 
         <input type="hidden" name="created" id="created">
@@ -146,14 +137,14 @@
                                             {!! Form::select('tindakan', $var['penanganan'], null, ['class'=>'form-control select2', 'placeholder'=>'Pilih Jenis Penanganan', 'style'=>'width: 100%;', 'onchange'=>'penangananAksi()']) !!}
                                             </div>
                                         </div>
-                                    <div id="areaTindakan">    
+                                    <div id="areaTindakan">
                                         <div class="form-group row">
                                             {!! Form::label('terapi_id', 'Terapi / Tindakan', ['class' => 'col-sm-2 col-form-label']) !!}
                                             <div class="col-sm-10">
                                                 {!! Form::select('terapi_id', $var['obat'], null, ['class'=>'form-control  select2', 'placeholder'=>'Pilih Terapi / Tindakan', 'style'=>'width: 100%;']) !!}
                                             </div>
                                         </div>
-                                    </div>    
+                                    </div>
                                         <div class="form-group row">
                                             {!! Form::label('dosis', 'Dosis / Ket Penaganan', ['class' => 'col-sm-2 col-form-label']) !!}
                                             <div class="col-sm-10">
@@ -167,7 +158,7 @@
                                             </div>
                                         </div>
             <div id="areaDataTerapiDosis"></div>
-            
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -222,20 +213,20 @@
 
         function editObat(id,klinik_id,tindakan,created){
             $('#created').val(created);
-            $('#klinik_id2').val(klinik_id);            
-            tampilDataTerapiDosis2(id,tindakan);            
+            $('#klinik_id2').val(klinik_id);
+            tampilDataTerapiDosis2(id,tindakan);
             $('#editobat').modal('show');
         }
-        
+
         function hapusRiwayat(klinik_id,id,created,tglperiksa){
-            $('#modalhps').modal('show');   
+            $('#modalhps').modal('show');
             $('#tglt').html(tglperiksa);
             $('#id').val(id);
             $('#created2').val(created);
             $('#klinik_id3').val(klinik_id);
         }
 
-        
+
         function editTerapi(id,klinik_id,anamnesa,ket,paramedis,diagnosa_id,diagnosa,tindakan,tanggal){
             $('#anamnesa').val(anamnesa);
             $('#id_terapi').val(id);
@@ -245,7 +236,7 @@
             $('#diagnosa').prop("selectedIndex",0);
             $('#paramedis').val(paramedis);
             $('#tgl_periksa').val(tanggal);
-            $('#modaledit').modal("show");            
+            $('#modaledit').modal("show");
         }
 
         function resetFormDataTerapiDosis(){
