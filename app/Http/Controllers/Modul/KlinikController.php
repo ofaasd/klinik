@@ -872,7 +872,7 @@ class KlinikController extends Controller
 			if($url == "awal")
 				return redirect('klinik/pendaftaran'.$var['url']['all']);
 			else
-				return redirect('klinik/detailPeriksa/' . $request->input("hewan"));
+				return redirect('klinik/detailPeriksa/' . $request->input("id_klinik_terapi"));
         }
 	}
 	public function simpan_pemeriksaan(Request $request){
